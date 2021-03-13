@@ -19,7 +19,7 @@ public class NBody {
             double yPos = in.readDouble();
             double xV = in.readDouble(), yV = in.readDouble();
             double mass = in.readDouble();
-            String gif = "images/" + in.readString();
+            String gif = in.readString();
 //            System.out.println(" "+xPos + yPos + xV + yV + mass + gif);
             planets[index] = new Planet(xPos, yPos, xV, yV, mass, gif);
             index++;
