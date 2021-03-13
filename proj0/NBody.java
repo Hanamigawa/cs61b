@@ -69,7 +69,7 @@ public class NBody {
         }
 
         StdOut.printf("%d\n", planets.length);
-        StdOut.printf("%f.2e\n", radius);
+        StdOut.printf("%.2e\n", radius);
         for(Planet x: planets){
             StdOut.printf("%.4e %.4e %.4e %.4e %.4e %12s\n", x.xxPos, x.yyPos, x.xxVel, x.yyVel, x.mass, x.imgFileName);
         }
