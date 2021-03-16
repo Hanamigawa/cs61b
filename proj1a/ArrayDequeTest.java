@@ -1,4 +1,5 @@
 /** Performs some basic linked list tests. */
+import java.util.Random;
 public class ArrayDequeTest {
 
 	/* Utility method for printing out empty checks. */
@@ -89,9 +90,23 @@ public class ArrayDequeTest {
 		printTestStatus(passed);
 	}
 
+	public static void specialTest(){
+		ArrayDeque<Integer> que1 = new ArrayDeque<>();
+		Random random = new Random();
+		for (int i = 0; i < 500; i++){
+			if (random.nextBoolean()){
+				que1.addFirst(i);
+			}else {
+				que1.removeLast();
+			}
+		}
+		System.out.println("Passed special test");
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
 		addIsEmptySizeTest();
 		addRemoveTest();
+		specialTest();
 	}
 }
