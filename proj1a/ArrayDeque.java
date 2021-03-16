@@ -21,8 +21,9 @@ public class ArrayDeque<T> {
     }
 
     private void resize() {
-        if (size < 4){
+        if (size < 8){
             recenter();
+            return;
         }
         T[] newItems = (T[]) new Object[size * 2];
         int newHead = newItems.length / 2 - size / 2;
