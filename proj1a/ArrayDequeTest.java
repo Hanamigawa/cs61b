@@ -1,5 +1,5 @@
 /** Performs some basic linked list tests. */
-public class LinkedListDequeTest {
+public class ArrayDequeTest {
 
 
 	/* Utility method for printing out empty checks. */
@@ -38,7 +38,7 @@ public class LinkedListDequeTest {
 		System.out.println("Running add/isEmpty/Size test.");
 //		System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-		LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
+		ArrayDeque<String> lld1 = new ArrayDeque<>();
 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
 
@@ -55,7 +55,7 @@ public class LinkedListDequeTest {
 		lld1.addLast("back");
 		passed = checkSize(3, lld1.size()) && passed;
 
-		System.out.println("Printing out deque: ");
+		System.out.println("Printing out array deque: ");
 		lld1.printDeque();
 
 		printTestStatus(passed);
@@ -69,7 +69,7 @@ public class LinkedListDequeTest {
 
 //		System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+		ArrayDeque<Integer> lld1 = new ArrayDeque<>();
 		// should be empty
 		boolean passed = checkEmpty(true, lld1.isEmpty());
 
@@ -84,7 +84,7 @@ public class LinkedListDequeTest {
 		// should be empty
 		passed = checkEmpty(true, lld1.isEmpty()) && passed;
 
-		System.out.println("Printing out deque: ");
+		System.out.println("Printing out array deque: ");
 		lld1.printDeque();
 
 		printTestStatus(passed);
