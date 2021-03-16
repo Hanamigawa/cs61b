@@ -21,12 +21,23 @@ public class ArrayDeque<T> {
     }
 
     private void resize() {
+        if (size < 4){
+            recenter();
+        }
         T[] newItems = (T[]) new Object[size * 2];
-        int newHead = size / 2;
+        int newHead = newItems.length / 2 - size / 2;
         System.arraycopy(items, head, newItems, newHead, size);
         this.items = newItems;
         head = newHead;
         tail = head + size - 1;
+    }
+    private void recenter(){
+        T[] newItems = (T[]) new Object[15];
+        int newHead = 7 - size / 2;
+        System.arraycopy(items, head, newItems, newHead, size);
+        head = newHead;
+        tail = head + size - 1;
+        items = newItems;
     }
 
     public void addFirst(T item) {
@@ -50,7 +61,7 @@ public class ArrayDeque<T> {
         return size == 0;
     }
     public T removeFirst() {
-        if (size == 0) {
+        if (size <= 0) {
             return null;
         }
         T val = items[head];
@@ -60,7 +71,7 @@ public class ArrayDeque<T> {
         return val;
     }
     public T removeLast() {
-        if (size == 0) {
+        if (size <= 0) {
             return null;
         }
         T val = items[tail];
