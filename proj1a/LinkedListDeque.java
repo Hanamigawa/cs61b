@@ -20,11 +20,11 @@ public class LinkedListDeque<T> {
         size =  0;
     }
 
-    public LinkedListDeque(T val) {
-        sentinel.right = new Node(val, sentinel, sentinel);
-        sentinel.left = sentinel.right;
-        size = 1;
-    }
+//    public LinkedListDeque(T val) {
+//        sentinel.right = new Node(val, sentinel, sentinel);
+//        sentinel.left = sentinel.right;
+//        size = 1;
+//    }
 
     public void addFirst(T item) {
         Node newNode = new Node(item, sentinel, sentinel.right);
@@ -40,11 +40,11 @@ public class LinkedListDeque<T> {
         size += 1;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
-    public int size(){
+    public int size() {
         return this.size;
     }
 
