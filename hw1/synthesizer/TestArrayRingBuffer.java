@@ -56,11 +56,10 @@ public class TestArrayRingBuffer {
     public void ARBIterTest(){
         BoundedQueue<String> arb = new ArrayRingBuffer<>(4);
         arb.enqueue("Hi");
-        arb.enqueue("");
+        arb.enqueue(" 1 ");
         arb.enqueue("B");
         arb.enqueue("C");
         for (String s : arb) {
-            System.out.println("1");
             System.out.println(s);
         }
 //        arb.enqueue("Empty");     // if iterator is destructive, this line will pass.

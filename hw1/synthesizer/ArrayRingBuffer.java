@@ -83,7 +83,7 @@ public class ArrayRingBuffer<T>  extends AbstractBoundedQueue<T>{
         private int cursorCount = 0;
 
         public boolean hasNext() {
-            return cursorCount <= fillCount();
+            return cursorCount < fillCount();
         }
 
         public T next() {
