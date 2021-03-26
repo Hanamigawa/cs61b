@@ -63,7 +63,7 @@ public class TestArrayRingBuffer {
             System.out.println("1");
             System.out.println(s);
         }
-        arb.enqueue("Empty");
+//        arb.enqueue("Empty");     // if iterator is destructive, this line will pass.
     }
     /** Calls tests for ArrayRingBuffer. */
     public static void main(String[] args) {
