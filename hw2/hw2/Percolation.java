@@ -17,10 +17,6 @@ public class Percolation {
         this.N = N;
         opened = new boolean[N][N];
         wqu = new WeightedQuickUnionUF(N * N + 2);
-        for (int i = 0; i < N; i++) {
-            wqu.union(N * N, to1D(0, i));
-            wqu.union(N * N + 1, to1D(N - 1, i));
-        }
     }
     public void open(int row, int col)       // open the site (row, col) if it is not open already
     {
@@ -28,6 +24,12 @@ public class Percolation {
         if (isOpen(row, col)) return;
         opened[row][col] = true;
         openCount++;
+        if (row == N - 1) {
+            wqu.union(to1D(row, col), N * N + 1);
+        }
+        if (row == 0) {
+            wqu.union(to1D(row, col), N * N);
+        }
         for (int neigh : findNeig(row, col)) {
             int[] neigh2D = to2D(neigh);
             int neigh_row = neigh2D[0];
@@ -60,6 +62,7 @@ public class Percolation {
         Percolation percoTest = new Percolation(3);
         boolean b;
         b = percoTest.isOpen(0, 1);     //exp: false
+        b = percoTest.isFull(0, 1);     //exp: false
         percoTest.open(0,1);
         b = percoTest.isOpen(0, 1);     //exp: true
         percoTest.open(2,1);
