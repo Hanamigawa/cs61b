@@ -57,10 +57,12 @@ public class Percolation {
     {
         return wqu.connected(N * N, N * N + 1);
     }
-    public static void main(String[] args)   // use for unit testing (not required)
+    private static void main(String[] args)   // use for unit testing (not required)
     {
         Percolation percoTest = new Percolation(3);
         boolean b;
+        //b = percoTest.isOpen(-1, 2);
+        //percoTest.open(1, 4);                 // exp: throw exception
         b = percoTest.isOpen(0, 1);     //exp: false
         b = percoTest.isFull(0, 1);     //exp: false
         percoTest.open(0,1);
