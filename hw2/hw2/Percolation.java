@@ -1,8 +1,10 @@
 package hw2;
 
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;
@@ -47,9 +49,12 @@ public class Percolation {
         if (row == N - 1) {
             openedBottom.add(cur);
         }
-        for (int x : openedBottom) {
-            if (wqu.connected(x, water)) {
-                wqu.union(x, ground);
+        Iterator<Integer> iterator = openedBottom.iterator();
+        while (iterator.hasNext()) {
+            int bottomNode = iterator.next();
+            if (wqu.connected(bottomNode, water)) {
+                wqu.union(bottomNode, ground);
+                iterator.remove();
             }
         }
     }

@@ -10,7 +10,7 @@ public class PercolationStats {
     public PercolationStats(int N, int T, PercolationFactory pf)   // perform T independent experiments on an N-by-N grid
     {
         if ( N <= 1 || T < 0) {
-            throw new InvalidParameterException("N must be greater than 1 and T must be non-negative");
+            throw new IllegalArgumentException("N must be greater than 1 and T must be non-negative");
         }
         means = new double[T];
         this.T = T;
