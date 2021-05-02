@@ -24,12 +24,6 @@ public class Percolation {
         if (isOpen(row, col)) return;
         opened[row][col] = true;
         openCount++;
-        if (row == N - 1) {
-            wqu.union(to1D(row, col), N * N + 1);
-        }
-        if (row == 0) {
-            wqu.union(to1D(row, col), N * N);
-        }
         for (int neigh : findNeig(row, col)) {
             int[] neigh2D = to2D(neigh);
             int neigh_row = neigh2D[0];
@@ -37,6 +31,12 @@ public class Percolation {
             if (opened[neigh_row][neigh_col]) {
                 wqu.union(to1D(row, col), to1D(neigh_row, neigh_col));
             }
+        }
+        if (row == N - 1 && wqu.connected(to1D(row, col), N * N)) {
+            wqu.union(to1D(row, col), N * N + 1);
+        }
+        if (row == 0) {
+            wqu.union(to1D(row, col), N * N);
         }
     }
     public boolean isOpen(int row, int col)  // is the site (row, col) open?
