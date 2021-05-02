@@ -5,11 +5,15 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
+
 public class Percolation {
     private boolean[][] opened;
     private int openCount = 0;
     private int N;
     private WeightedQuickUnionUF wqu;
+    private boolean percolated = false;
+    private List<Integer> openedBottom = new ArrayList<>();
     public Percolation(int N) {     // create N-by-N grid, with all sites initially blocked
         if (N <= 0) {
             throw new IllegalArgumentException("N couldn't be less than one.");
@@ -21,6 +25,9 @@ public class Percolation {
     public void open(int row, int col)       // open the site (row, col) if it is not open already
     {
         isInputValid(row, col);
+        if (row == 0) {
+            wqu.union(to1D(row, col), N * N);
+        }
         if (isOpen(row, col)) return;
         opened[row][col] = true;
         openCount++;
@@ -29,14 +36,19 @@ public class Percolation {
             int neigh_row = neigh2D[0];
             int neigh_col = neigh2D[1];
             if (opened[neigh_row][neigh_col]) {
-                wqu.union(to1D(row, col), to1D(neigh_row, neigh_col));
+                wqu.union(to1D(row, col), neigh);
             }
         }
-        if (row == N - 1 && wqu.connected(to1D(row, col), N * N)) {
-            wqu.union(to1D(row, col), N * N + 1);
+//        if (row == N - 1 && wqu.connected(to1D(row, col), N * N)) {
+//            wqu.union(to1D(row, col), N * N + 1);
+//        }
+        if (row == N - 1) {
+            openedBottom.add(to1D(row, col));
         }
-        if (row == 0) {
-            wqu.union(to1D(row, col), N * N);
+        for (int x : openedBottom) {
+            if (wqu.connected(x, N * N - 1)) {
+                wqu.union(x, N * N + 1);
+            }
         }
     }
     public boolean isOpen(int row, int col)  // is the site (row, col) open?
@@ -57,22 +69,22 @@ public class Percolation {
     {
         return wqu.connected(N * N, N * N + 1);
     }
-    private static void main(String[] args)   // use for unit testing (not required)
+    public static void main(String[] args)   // use for unit testing (not required)
     {
         Percolation percoTest = new Percolation(3);
         boolean b;
         //b = percoTest.isOpen(-1, 2);
         //percoTest.open(1, 4);                 // exp: throw exception
-        b = percoTest.isOpen(0, 1);     //exp: false
-        b = percoTest.isFull(0, 1);     //exp: false
+        assertFalse(percoTest.isOpen(0, 1));     //exp: false
+        assertFalse(percoTest.isFull(0, 1));     //exp: false
         percoTest.open(0,1);
-        b = percoTest.isOpen(0, 1);     //exp: true
+        assert(percoTest.isOpen(0, 1));     //exp: true
         percoTest.open(2,1);
-        b = percoTest.isFull(2, 1);     //exp: false
-        b = percoTest.percolates();             // exp: false;
+        assertFalse(percoTest.isFull(2, 1));     //exp: false
+        assertFalse(percoTest.percolates());             // exp: false;
         percoTest.open(1, 1);
-        b = percoTest.isFull(2, 1);     //exp: true;
-        b = percoTest.percolates();             // exp true;
+        assert(percoTest.isFull(2, 1));     //exp: true;
+        assert(percoTest.percolates());             // exp true;
     }
     private boolean isInputValid(int i, int j) {
         if (i < 0 || i > N - 1 || j < 0 || j > N - 1) {
