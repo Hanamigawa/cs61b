@@ -14,19 +14,24 @@ public class Percolation {
     private WeightedQuickUnionUF wqu;
     private boolean percolated = false;
     private List<Integer> openedBottom = new ArrayList<>();
+    private int water;
+    private int ground;
     public Percolation(int N) {     // create N-by-N grid, with all sites initially blocked
         if (N <= 0) {
             throw new IllegalArgumentException("N couldn't be less than one.");
         }
         this.N = N;
+        this.water = N * N;
+        this.ground = N * N + 1;
         opened = new boolean[N][N];
         wqu = new WeightedQuickUnionUF(N * N + 2);
     }
     public void open(int row, int col)       // open the site (row, col) if it is not open already
     {
         isInputValid(row, col);
+        int cur = to1D(row, col);
         if (row == 0) {
-            wqu.union(to1D(row, col), N * N);
+            wqu.union(water, cur);
         }
         if (isOpen(row, col)) return;
         opened[row][col] = true;
@@ -36,18 +41,15 @@ public class Percolation {
             int neigh_row = neigh2D[0];
             int neigh_col = neigh2D[1];
             if (opened[neigh_row][neigh_col]) {
-                wqu.union(to1D(row, col), neigh);
+                wqu.union(cur, neigh);
             }
         }
-//        if (row == N - 1 && wqu.connected(to1D(row, col), N * N)) {
-//            wqu.union(to1D(row, col), N * N + 1);
-//        }
         if (row == N - 1) {
-            openedBottom.add(to1D(row, col));
+            openedBottom.add(cur);
         }
         for (int x : openedBottom) {
-            if (wqu.connected(x, N * N - 1)) {
-                wqu.union(x, N * N + 1);
+            if (wqu.connected(x, water)) {
+                wqu.union(x, ground);
             }
         }
     }
@@ -59,7 +61,7 @@ public class Percolation {
     public boolean isFull(int row, int col)  // is the site (row, col) full?
     {
         isInputValid(row, col);
-        return wqu.connected(to1D(row, col), N * N);
+        return wqu.connected(to1D(row, col), water);
     }
     public int numberOfOpenSites()           // number of open sites
     {
@@ -67,9 +69,9 @@ public class Percolation {
     }
     public boolean percolates()              // does the system percolate?
     {
-        return wqu.connected(N * N, N * N + 1);
+        return wqu.connected(water, ground);
     }
-    public static void main(String[] args)   // use for unit testing (not required)
+    private static void main(String[] args)   // use for unit testing (not required)
     {
         Percolation percoTest = new Percolation(3);
         boolean b;
